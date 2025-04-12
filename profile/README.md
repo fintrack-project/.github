@@ -51,6 +51,8 @@ Infrastructure-as-code (IaC) and CI/CD configurations using Jenkins, Docker, and
 
 ## 📐 Architecture Overview
 
+![FinTrack Architecture](/profile/asset/FinTrack_Architecture.png)
+
 - User data flows from frontend to backend and is stored in PostgreSQL.
 - Daily market data is pulled via the Python ETL pipeline and published to Kafka.
 - Spring Boot backend consumes data from Kafka and updates relevant tables.
