@@ -31,29 +31,6 @@ Whether you're a seasoned investor or just starting out, FinTrack offers a simpl
 
 ## 📐 Architecture Overview
 
-+------------------------+       +-------------------------+
-|     React Frontend     | <---> |  Spring Boot Backend    |
-|  (TypeScript, Vite)    |       |  (Java, REST API)       |
-+------------------------+       +-----------+-------------+
-                                              |
-                                              v
-                                   +----------+----------+
-                                   |    PostgreSQL DB     |
-                                   +----------+----------+
-                                              ^
-                                              |
-                                              v
-                                  +-----------+-----------+
-                                  |   Kafka Message Broker |
-                                  +-----------+-----------+
-                                              ^
-                                              |
-                                              v
-                               +--------------+--------------+
-                               |   Python ETL Pipeline       |
-                               | (Daily market data fetch)   |
-                               +-----------------------------+
-
 - User data flows from frontend to backend and is stored in PostgreSQL.
 - Daily market data is pulled via the Python ETL pipeline and published to Kafka.
 - Spring Boot backend consumes data from Kafka and updates relevant tables.
