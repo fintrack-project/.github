@@ -37,6 +37,8 @@ Whether you're a seasoned investor or just starting out, FinTrack offers a simpl
 - Daily market data is pulled via the Python ETL pipeline and published to Kafka.
 - Spring Boot backend consumes data from Kafka and updates relevant tables.
 
+---
+
 ## 🛣 Roadmap / TODOs
 - Cloud deployment (AWS: ECS, S3, RDS, CloudFront)
 - CI/CD for all services with Jenkins + Quay
