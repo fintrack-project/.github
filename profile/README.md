@@ -29,6 +29,26 @@ Whether you're a seasoned investor or just starting out, FinTrack offers a simpl
 
 ---
 
+## 📦 Repository Overview
+This project follows a polyrepo architecture to modularize different components of the Personal Financial Tracker system. Below are the descriptions of each repository:
+
+financial-tracker-frontend(https://github.com/fintrack-project/financial-tracker-backend)
+A React + TypeScript frontend that allows users to view, add, and manage their financial assets through a responsive dashboard. This interface connects to the backend API for real-time asset tracking, historical data visualization, and portfolio insights.
+
+financial-tracker-backend(https://github.com/fintrack-project/financial-tracker-backend)
+A Java Spring Boot application that provides RESTful APIs to handle user assets, portfolio data, and integrate with ETL pipelines. It manages business logic, coordinates with the PostgreSQL database, and communicates with Kafka for async data processing.
+
+financial-tracker-db(https://github.com/fintrack-project/financial-tracker-backend)
+Contains PostgreSQL schema definitions, DDL scripts, and database migration files to support backend operations. This repo ensures the database stays version-controlled and can be reliably set up across environments.
+
+financial-tracker-etl(https://github.com/fintrack-project/financial-tracker-backend)
+A Python-based ETL service that fetches daily market data from external APIs, processes it, and sends structured data through Kafka for backend ingestion. Supports tracking of stocks, crypto, and other assets.
+
+financial-tracker-infra(https://github.com/fintrack-project/financial-tracker-backend)
+Infrastructure-as-code (IaC) and CI/CD configurations using Jenkins, Docker, and Kubernetes (planned). This repo also contains deployment scripts and containerization logic to manage services across development and production environments.
+
+---
+
 ## 📐 Architecture Overview
 
 - User data flows from frontend to backend and is stored in PostgreSQL.
