@@ -33,48 +33,12 @@ Whether you're a seasoned investor or just starting out, FinTrack offers a simpl
 
 [ React (Frontend) ] <---> [ Java Spring Boot REST API ] <---> [ PostgreSQL ] ↑ | [ Kafka Message Broker ] ↑ [ Python ETL Pipeline (batch daily market data) ]
 
-
 - User data flows from frontend to backend and is stored in PostgreSQL.
 - Daily market data is pulled via the Python ETL pipeline and published to Kafka.
 - Spring Boot backend consumes data from Kafka and updates relevant tables.
 
----
-
-## 🧰 Getting Started
-
-### Prerequisites
-
-- Node.js + npm
-- Java 17+
-- Python 3.10+
-- PostgreSQL
-- Docker
-- Kafka (locally or via container)
-- Jenkins (optional for CI/CD)
-
-### Setup
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/your-username/fintrack.git
-cd fintrack
-
-# 2. Set up environment variables
-cp .env.example .env
-# Fill out .env for backend, frontend, and Python ETL
-
-# 3. Build and run backend
-cd backend
-./gradlew build
-docker build -t fintrack-backend .
-docker run -p 8080:8080 fintrack-backend
-
-# 4. Run frontend
-cd ../frontend
-npm install
-npm run dev
-
-# 5. Start Kafka and run ETL pipeline (Python)
-cd ../etl
-pip install -r requirements.txt
-python main.py
+## 🛣 Roadmap / TODOs
+- Cloud deployment (AWS: ECS, S3, RDS, CloudFront)
+- CI/CD for all services with Jenkins + Quay
+- User authentication and authorisation
+- Enhanced portfolio analytics (risk, ROI, diversification index)
