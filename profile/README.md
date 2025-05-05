@@ -1,5 +1,7 @@
 # FinTrack 🧾📊
 
+![FinTrack Logo](./asset/FinTrackLogo.png)
+
 **FinTrack** is a user-friendly personal financial tracker designed to help individuals **manually track and manage their investment portfolios** in one centralised location. It supports asset categories such as stocks, cryptocurrencies, and real estate, while providing **daily-updated market data** and historical analytics to help users make smarter financial decisions.
 
 Whether you're a seasoned investor or just starting out, FinTrack offers a simple yet powerful way to stay on top of your financial journey.
