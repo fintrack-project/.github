@@ -38,7 +38,7 @@ fintrack-project/
 - **Purpose**: Runs backend (Spring Boot) tests
 - **Trigger**: Push and Pull Requests
 - **Features**:
-  - Java 17 setup with Temurin distribution
+  - Java 21 setup with Temurin distribution
   - Maven dependency caching
   - Test execution with `./mvnw test`
   - Code coverage upload to Codecov
