@@ -1,10 +1,40 @@
 # GitHub Actions CI/CD Pipeline
 
-This directory contains the GitHub Actions workflows for the FinTrack project CI/CD pipeline.
+This directory contains shared GitHub Actions configurations and documentation for the FinTrack project.
 
-## Workflows
+## Repository Structure
 
-### 1. `backend-tests.yml`
+The CI/CD workflows are now properly distributed across individual repositories:
+
+```
+fintrack-project/
+├── financial-tracker-frontend/
+│   └── .github/workflows/
+│       └── frontend-tests.yml          ✅ Frontend CI pipeline
+├── financial-tracker-backend/
+│   └── .github/workflows/
+│       └── backend-tests.yml           ✅ Backend CI pipeline
+├── financial-tracker-etl/
+│   └── .github/workflows/
+│       └── etl-tests.yml               ✅ ETL CI pipeline
+└── financial-tracker-infra/
+    └── .github/workflows/
+        └── deployment.yml               ✅ AWS deployment pipeline
+```
+
+## Workflow Details
+
+### 1. Frontend Tests (`financial-tracker-frontend/.github/workflows/frontend-tests.yml`)
+- **Purpose**: Runs frontend (React) tests and build
+- **Trigger**: Push and Pull Requests
+- **Features**:
+  - Node.js 18 setup with npm caching
+  - Dependency installation with `npm ci`
+  - Test execution with Jest (`--watchAll=false --passWithNoTests`)
+  - Production build verification
+  - Code coverage upload to Codecov
+
+### 2. Backend Tests (`financial-tracker-backend/.github/workflows/backend-tests.yml`)
 - **Purpose**: Runs backend (Spring Boot) tests
 - **Trigger**: Push and Pull Requests
 - **Features**:
@@ -13,17 +43,7 @@ This directory contains the GitHub Actions workflows for the FinTrack project CI
   - Test execution with `./mvnw test`
   - Code coverage upload to Codecov
 
-### 2. `frontend-tests.yml`
-- **Purpose**: Runs frontend (React) tests and build
-- **Trigger**: Push and Pull Requests
-- **Features**:
-  - Node.js 18 setup with npm caching
-  - Dependency installation with `npm ci`
-  - Test execution with Jest
-  - Production build verification
-  - Code coverage upload to Codecov
-
-### 3. `etl-tests.yml`
+### 3. ETL Tests (`financial-tracker-etl/.github/workflows/etl-tests.yml`)
 - **Purpose**: Runs ETL (Python) tests
 - **Trigger**: Push and Pull Requests
 - **Features**:
@@ -33,7 +53,7 @@ This directory contains the GitHub Actions workflows for the FinTrack project CI
   - Coverage reporting (XML and HTML)
   - Code coverage upload to Codecov
 
-### 4. `deployment.yml`
+### 4. Deployment (`financial-tracker-infra/.github/workflows/deployment.yml`)
 - **Purpose**: Deploys to AWS infrastructure
 - **Trigger**: Push to main branch or manual dispatch
 - **Features**:
@@ -43,17 +63,9 @@ This directory contains the GitHub Actions workflows for the FinTrack project CI
   - CloudFront cache invalidation
   - ECS service deployment
 
-### 5. `all-tests.yml`
-- **Purpose**: Runs all tests in parallel
-- **Trigger**: Push and Pull Requests
-- **Features**:
-  - Parallel execution of backend, frontend, and ETL tests
-  - Consolidated coverage reporting
-  - Faster feedback for developers
-
 ## Required Secrets
 
-For the deployment workflow to work, you need to configure these secrets in your GitHub repository:
+For the deployment workflow to work, you need to configure these secrets in the `financial-tracker-infra` repository:
 
 ### AWS Credentials
 - `AWS_ACCESS_KEY_ID`: AWS access key
@@ -68,11 +80,13 @@ For the deployment workflow to work, you need to configure these secrets in your
 
 ## Setup Instructions
 
-1. **Enable GitHub Actions**: Go to your repository Settings > Actions > General and enable Actions
+1. **Enable GitHub Actions**: Go to each repository Settings > Actions > General and enable Actions
 
-2. **Configure Secrets**: Go to Settings > Secrets and variables > Actions and add the required secrets
+2. **Configure Secrets**: Go to `financial-tracker-infra` Settings > Secrets and variables > Actions and add the required AWS secrets
 
-3. **Push to Trigger**: Push to any branch to trigger the test workflows, or push to main to trigger deployment
+3. **Create Pull Requests**: Each repository has a `178-cicd-pipeline` branch with the workflows ready for PR
+
+4. **Push to Trigger**: Push to any branch to trigger the test workflows, or push to main to trigger deployment
 
 ## Coverage Thresholds
 
@@ -99,8 +113,15 @@ npm run build
 # ETL
 cd financial-tracker-etl
 pip install -r requirements.txt
-python -m pytest tests/ -v
+python -m pytest tests/ -v --cov=etl
 ```
+
+## Repository URLs
+
+- **Frontend**: https://github.com/fintrack-project/financial-tracker-frontend
+- **Backend**: https://github.com/fintrack-project/financial-tracker-backend
+- **ETL**: https://github.com/fintrack-project/financial-tracker-etl
+- **Infra**: https://github.com/fintrack-project/financial-tracker-infra
 
 ## Troubleshooting
 
@@ -113,6 +134,13 @@ python -m pytest tests/ -v
 
 ### Debugging
 
-- Check the Actions tab in your GitHub repository for detailed logs
+- Check the Actions tab in each GitHub repository for detailed logs
 - Use `workflow_dispatch` trigger for manual testing
-- Review the "Run Tests" step logs for specific error messages 
+- Review the "Run Tests" step logs for specific error messages
+
+## Migration Notes
+
+- ✅ Workflows moved from centralized `.github` repository to individual repositories
+- ✅ Each repository now has its own CI/CD pipeline
+- ✅ Workflows will trigger when code is pushed to their respective repositories
+- ✅ Deployment workflow is in the infrastructure repository for centralized deployment management 
