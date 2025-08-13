@@ -64,7 +64,7 @@
 | **Backend**         | Spring Boot 3.2, Java 21, JPA/Hibernate          | Latest           | RESTful APIs, Business Logic   |
 | **Database**        | PostgreSQL 17, Flyway Migrations                  | Latest           | Data Persistence, Versioning   |
 | **ETL Pipeline**    | Python 3.11, Pandas, Kafka Integration           | Latest           | Data Processing, Market Feeds  |
-| **Messaging**       | Apache Kafka, Real-time API Updates               | Latest           | Real-time Communication        |
+| **Messaging**       | Apache Kafka, Real-time Data Processing           | Latest           | Real-time Communication        |
 | **Security**        | JWT, Firebase Auth, OAuth 2.0                    | Latest           | Authentication, Authorization  |
 | **DevOps**          | Docker, Jenkins, CI/CD Pipelines                  | Latest           | Containerization, Automation   |
 | **Cloud Ready**     | Docker, Docker Compose, CI/CD                    | Latest           | Scalability, Reliability       |
