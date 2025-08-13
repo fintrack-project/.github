@@ -1,10 +1,10 @@
-# GitHub Actions CI/CD Pipeline
+# FinTrack CI/CD Testing Pipeline
 
-This directory contains shared GitHub Actions configurations and documentation for the FinTrack project.
+This directory contains GitHub Actions testing workflows and documentation for the FinTrack project.
 
 ## Repository Structure
 
-The CI/CD workflows are now properly distributed across individual repositories:
+The testing workflows are distributed across individual repositories:
 
 ```
 fintrack-project/
@@ -19,10 +19,12 @@ fintrack-project/
 │       └── etl-tests.yml               ✅ ETL CI pipeline
 └── financial-tracker-infra/
     └── .github/workflows/
-        └── deployment.yml               ✅ AWS deployment pipeline
+        └── (No GitHub Actions deployment)
+    └── ci-cd/
+        └── Jenkinsfile                    ✅ Jenkins CI/CD Pipeline
 ```
 
-## Workflow Details
+## Testing Workflow Details
 
 ### 1. Frontend Tests (`financial-tracker-frontend/.github/workflows/frontend-tests.yml`)
 - **Purpose**: Runs frontend (React) tests and build
@@ -53,14 +55,15 @@ fintrack-project/
   - Coverage reporting (XML and HTML)
   - Code coverage upload to Codecov
 
-### 4. Deployment (Not Yet Implemented)
-- **Purpose**: Will deploy to containerized infrastructure
-- **Status**: Planning phase
-- **Planned Features**:
-  - Docker image building and pushing
-  - Container orchestration deployment
-  - Health checks and monitoring
-  - Automated rollback capabilities
+### 4. Jenkins CI/CD Pipeline (`financial-tracker-infra/ci-cd/Jenkinsfile`)
+- **Purpose**: Build and deploy Docker images to Quay.io registry
+- **Status**: ✅ Fully implemented and working
+- **Features**:
+  - Multi-service Docker image building (Frontend, Backend, ETL)
+  - Environment-specific builds (dev/prod)
+  - Container registry integration (Quay.io)
+  - Automated versioning and tagging
+  - Health checks and validation
 
 ## Required Secrets
 
@@ -69,10 +72,11 @@ For the test workflows to work, you need to configure these secrets in each repo
 ### Codecov Integration
 - `CODECOV_TOKEN`: Codecov token for coverage reporting
 
-### Future Deployment (When Implemented)
-- Container registry credentials
-- Deployment environment variables
-- Health check endpoints
+### Jenkins CI/CD Pipeline
+- **Container Registry**: Quay.io integration with automated image pushing
+- **Build Environments**: Development and production builds with versioning
+- **Service Orchestration**: Multi-service Docker image building and deployment
+- **Automation**: Jenkins pipeline with parameterized builds and validation
 
 ## Setup Instructions
 
@@ -112,6 +116,25 @@ pip install -r requirements.txt
 python -m pytest tests/ -v --cov=etl
 ```
 
+## Jenkins CI/CD Pipeline Details
+
+The Jenkins pipeline in `financial-tracker-infra/ci-cd/` provides comprehensive CI/CD capabilities:
+
+### **Pipeline Features**
+- **Multi-Service Building**: Frontend, Backend, and ETL services
+- **Environment Management**: Development and production builds
+- **Version Control**: Automated versioning with semantic versioning
+- **Container Registry**: Quay.io integration for image storage
+- **Health Checks**: Service validation and monitoring
+- **Parameterized Builds**: Flexible build configuration
+
+### **Build Process**
+1. **Environment Validation**: Checks branch permissions and required files
+2. **Service Building**: Clones repositories and builds Docker images
+3. **Image Tagging**: Applies version tags and environment labels
+4. **Registry Push**: Uploads images to Quay.io container registry
+5. **Cleanup**: Removes temporary files and Docker artifacts
+
 ## Repository URLs
 
 - **Frontend**: https://github.com/fintrack-project/financial-tracker-frontend
@@ -126,7 +149,7 @@ python -m pytest tests/ -v --cov=etl
 1. **Maven Wrapper Missing**: Ensure `mvnw` and `mvnw.cmd` exist in the backend directory
 2. **Node Modules**: Frontend workflow uses `npm ci` for clean installs
 3. **Python Dependencies**: ETL workflow installs from `requirements.txt`
-4. **Docker Permissions**: Ensure Docker has proper permissions for building images
+4. **Docker Permissions**: Ensure Docker has proper permissions for local development
 
 ### Debugging
 
@@ -134,9 +157,10 @@ python -m pytest tests/ -v --cov=etl
 - Use `workflow_dispatch` trigger for manual testing
 - Review the "Run Tests" step logs for specific error messages
 
-## Migration Notes
+## Project Status
 
-- ✅ Workflows moved from centralized `.github` repository to individual repositories
-- ✅ Each repository now has its own CI/CD pipeline
-- ✅ Workflows will trigger when code is pushed to their respective repositories
-- ✅ Deployment workflow is in the infrastructure repository for centralized deployment management 
+- ✅ **Test Workflows**: Each repository has its own CI pipeline for testing
+- ✅ **Jenkins CI/CD**: Full Docker image building and deployment pipeline
+- ✅ **Container Registry**: Quay.io integration with automated image management
+- ✅ **Local Development**: Docker Compose for local development and testing
+- ✅ **Code Quality**: Automated testing, coverage reporting, and deployment 
