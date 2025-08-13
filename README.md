@@ -53,40 +53,36 @@ fintrack-project/
   - Coverage reporting (XML and HTML)
   - Code coverage upload to Codecov
 
-### 4. Deployment (`financial-tracker-infra/.github/workflows/deployment.yml`)
-- **Purpose**: Deploys to AWS infrastructure
-- **Trigger**: Push to main branch or manual dispatch
-- **Features**:
-  - AWS credentials configuration
-  - ECR login and Docker image push
-  - S3 frontend deployment
-  - CloudFront cache invalidation
-  - ECS service deployment
+### 4. Deployment (Not Yet Implemented)
+- **Purpose**: Will deploy to containerized infrastructure
+- **Status**: Planning phase
+- **Planned Features**:
+  - Docker image building and pushing
+  - Container orchestration deployment
+  - Health checks and monitoring
+  - Automated rollback capabilities
 
 ## Required Secrets
 
-For the deployment workflow to work, you need to configure these secrets in the `financial-tracker-infra` repository:
+For the test workflows to work, you need to configure these secrets in each repository:
 
-### AWS Credentials
-- `AWS_ACCESS_KEY_ID`: AWS access key
-- `AWS_SECRET_ACCESS_KEY`: AWS secret key
-- `AWS_REGION`: AWS region (e.g., us-east-1)
+### Codecov Integration
+- `CODECOV_TOKEN`: Codecov token for coverage reporting
 
-### AWS Resources
-- `S3_BUCKET`: S3 bucket name for frontend deployment
-- `CLOUDFRONT_DISTRIBUTION_ID`: CloudFront distribution ID
-- `ECS_CLUSTER`: ECS cluster name
-- `ECS_SERVICE`: ECS service name
+### Future Deployment (When Implemented)
+- Container registry credentials
+- Deployment environment variables
+- Health check endpoints
 
 ## Setup Instructions
 
 1. **Enable GitHub Actions**: Go to each repository Settings > Actions > General and enable Actions
 
-2. **Configure Secrets**: Go to `financial-tracker-infra` Settings > Secrets and variables > Actions and add the required AWS secrets
+2. **Configure Secrets**: Go to each repository Settings > Secrets and variables > Actions and add the required secrets
 
 3. **Create Pull Requests**: Each repository has a `178-cicd-pipeline` branch with the workflows ready for PR
 
-4. **Push to Trigger**: Push to any branch to trigger the test workflows, or push to main to trigger deployment
+4. **Push to Trigger**: Push to any branch to trigger the test workflows
 
 ## Coverage Thresholds
 
@@ -130,7 +126,7 @@ python -m pytest tests/ -v --cov=etl
 1. **Maven Wrapper Missing**: Ensure `mvnw` and `mvnw.cmd` exist in the backend directory
 2. **Node Modules**: Frontend workflow uses `npm ci` for clean installs
 3. **Python Dependencies**: ETL workflow installs from `requirements.txt`
-4. **AWS Permissions**: Ensure the AWS credentials have proper IAM permissions
+4. **Docker Permissions**: Ensure Docker has proper permissions for building images
 
 ### Debugging
 
